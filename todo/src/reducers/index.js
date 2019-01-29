@@ -1,18 +1,37 @@
-import { ADD_TODO } from '../actions';
+import { ADD_TODO, TOGGLE_COMPLETE } from '../actions';
 
 const initialState = {
-  todos: []
+  todos: [
+    { taskName: 'clean room', 
+      completed: false 
+    }
+  ]
 }
 
-export default (state = initialState, action) => {
+function reducer(state = initialState, action) {
   switch (action.type) {
-    case ADD_TODO: 
-    console.log('Code me, Papi')
-    console.log(action.payload)
-      return {
-        todos: [...state.todos, action.payload]
-      }
-  default: 
-    return state;
+    case ADD_TODO:
+    console.log('add-todo', action);
+    const newTask = {
+      taskName: action.payload,
+      completed: false
+    }
+    return {
+      ...state,
+      todos: [...state.todos, newTask]
+    }
+    case TOGGLE_COMPLETE:
+    return {
+      ...state,
+      todos: state.todos.map((todo, index) => 
+      action.payload === index
+      ? { ...todo, completed: !todo.completed }
+      : todo   
+      )
+    }
+    default:
+      return state;
   }
 }
+
+export default reducer;

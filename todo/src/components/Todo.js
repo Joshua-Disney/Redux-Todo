@@ -1,25 +1,48 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { addTodo } from '../actions';
+import { addNewTask, toggleComplete } from '../actions';
 
-const handleChanges = (event) => {
-  this.setState({ [event.target.name]: event.target.value });
-}
 
-class Todo extends React.Component {
+
+class TodoList extends React.Component {
+  state = {
+    newTask: ''
+  }
+
+  handleChanges = (event) => {
+    this.setState({ newTask: event.target.value });
+  }
+
+  addTodo = event => {
+    event.preventDefault();
+    this.props.addNewTask(this.state.newTask);
+  }
+
+  toggleComplete = (event, index) => {
+    event.preventDefault();
+    this.props.toggleComplete(index);
+  }
+  
   render() {
     console.log(this.props)
     return (
       <div>
         <h1>Code me, Papi!</h1>
+        <div>
+          {this.props.todos.map((todo, index) => (
+            <p onClick={event => this.toggleComplete(event, index)} key={index}>
+              {todo.taskName}
+            </p>
+          ))}
+        </div>
           <input
             type='text'
-            name='newtask'
+            value={this.state.newTask}
             placeholder='Type me, Papi!'
             onChange={this.handleChanges}
           />
-          <button onClick={() => {this.props.addTodo(this.props.todos)}}>Add me, Papi</button>
+          <button onClick={this.addTodo}>Add me, Papi</button>
       </div>
     )
   }
@@ -31,4 +54,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { addTodo })(Todo);
+export default connect(mapStateToProps, { addNewTask, toggleComplete })(TodoList);
