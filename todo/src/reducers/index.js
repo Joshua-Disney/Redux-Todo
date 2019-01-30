@@ -1,11 +1,7 @@
 import { ADD_TODO, TOGGLE_COMPLETE } from '../actions';
 
 const initialState = {
-  todos: [
-    { taskName: 'clean room', 
-      completed: false 
-    }
-  ]
+  todos: []
 }
 
 function reducer(state = initialState, action) {

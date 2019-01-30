@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { addNewTask, toggleComplete } from '../actions';
 
+import './Todo.css';
+
 
 
 class TodoList extends React.Component {
@@ -27,22 +29,24 @@ class TodoList extends React.Component {
   render() {
     console.log(this.props)
     return (
-      <div>
-        <h1>Code me, Papi!</h1>
-        <div>
-          {this.props.todos.map((todo, index) => (
-            <p onClick={event => this.toggleComplete(event, index)} key={index}>
-              {todo.taskName}
-            </p>
-          ))}
-        </div>
+      <div className='container'>
+        <h1 className='heading'>Things to do!</h1>
+        <div className='taskList'>
+          <div>
+            {this.props.todos.map((todo, index) => (
+              <p className={todo.completed  && 'completed'} onClick={event => this.toggleComplete(event, index)} key={index}>
+                {todo.taskName}
+              </p>
+            ))}
+          </div>
           <input
             type='text'
             value={this.state.newTask}
-            placeholder='Type me, Papi!'
+            placeholder='add new task...'
             onChange={this.handleChanges}
           />
-          <button onClick={this.addTodo}>Add me, Papi</button>
+          <button onClick={this.addTodo}>Add it!</button>
+        </div>
       </div>
     )
   }
